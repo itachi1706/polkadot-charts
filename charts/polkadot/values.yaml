@@ -46,6 +46,10 @@ persistence:
   accessModes: [ "ReadWriteOnce" ]
   #storageClassName: premium-rwo
 
+snapshot:
+  enabled: true
+  name: hello
+
 dnsNameservers:
 - 173.245.58.93
 - 173.245.59.247
