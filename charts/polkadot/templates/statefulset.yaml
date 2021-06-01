@@ -99,7 +99,6 @@ spec:
           {{- if $chainspec }}
           --chain={{ $chainspec }}
           {{- end }}
-          --name={{ .Values.name }}
           -d=/data
           {{- if .Values.unsafeEndpointAccess }}
           --unsafe-rpc-external
