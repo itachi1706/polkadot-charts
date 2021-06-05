@@ -29,3 +29,5 @@ createBootNodeService: true
 
 alertRulesLabels:
   app: polkadot
+
+chainSpecName: polkadot

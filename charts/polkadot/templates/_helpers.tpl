@@ -30,7 +30,7 @@ polkadot-custom-chainspec
 
 {{/* Returns the PSP name */}}
 {{- define "polkadot-deployer.podSecurityPolicyName" -}}
-{{ .Release.Name }}
+{{ .Release.Name }}-{{ .Release.chainspec.name }}
 {{- end }}
 
 {{/* Returns the external websockets service name */}}

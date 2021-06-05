@@ -15,7 +15,7 @@
 
 {{/* Returns the Grafana TLS secret name */}}
 {{- define "polkadot-deployer.grafanaTlsSecretName" -}}
-{{ .Release.Name }}-grafana-tls
+{{ .Release.Name }}-grafana-{{ .Values.chainSpecName }}-tls
 {{- end }}
 
 {{/* Returns the session key secret name */}}
@@ -30,7 +30,7 @@
 
 {{/* Returns the PSP name */}}
 {{- define "polkadot-deployer.podSecurityPolicyName" -}}
-{{ .Release.Name }}
+{{ .Release.Name }}-{{ .Values.chainSpecName }}
 {{- end }}
 
 {{/* Returns the websockets domain */}}
