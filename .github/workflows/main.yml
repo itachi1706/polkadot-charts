@@ -8,7 +8,7 @@ on:
 jobs:
   package-polkadot-base-services:
     runs-on: ubuntu-latest
-    name: Build and Package Polkadot Base Services
+    name: Package Polkadot Base Services
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
@@ -24,3 +24,61 @@ jobs:
         with:
           name: polkadot-base-services-tgz
           path: charts/polkadot-base-services/*.tgz
+  package-polkadot:
+    runs-on: ubuntu-latest
+    name: Package Polkadot
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          rm get_helm.sh
+      - name: Package Helm
+        working-directory: charts/polkadot
+        run: helm package .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: polkadot-tgz
+          path: charts/polkadot/*.tgz
+  package-polkadot-secrets:
+    runs-on: ubuntu-latest
+    name: Package Polkadot Secrets
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          rm get_helm.sh
+      - name: Package Helm
+        working-directory: charts/polkadot-secrets
+        run: helm package .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: polkadot-secrets-tgz
+          path: charts/polkadot-secrets/*.tgz
+  package-substrate-alertrules:
+      runs-on: ubuntu-latest
+      name: Package Substrate Alertrules
+      steps:
+        - uses: actions/checkout@v2
+        - name: Install Dependencies
+          run: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+            rm get_helm.sh
+            brew install yq
+            sudo apt-get install prometheus
+        - name: Generate Alertrules
+          run: scripts/substrate-alertrules-charts/import.sh
+        - name: Package Helm
+          working-directory: charts/substrate-alertrules
+          run: helm package .
+        - uses: actions/upload-artifact@v2
+          with:
+            name: substrate-alertrules-tgz
+            path: charts/substrate-alertrules/*.tgz
