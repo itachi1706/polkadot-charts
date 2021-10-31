@@ -25,5 +25,8 @@ helm package .
 
 ## Substrate Alert Rules Setup
 ```bash
+brew install yq
+sudo apt-get install prometheus
 scripts/substrate-alertrules-charts/import.sh
+scripts/substrate-alertrules-charts/test_prometheus_rules.sh
 ```
