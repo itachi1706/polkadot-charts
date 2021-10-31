@@ -91,15 +91,29 @@ spec:
       - name: {{ .Release.Name }}
         image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
+        {{- if .Values.customBinary }}
+        command: ["{{ .Values.customBinary.command | default "/bin/sh" }}"]
+        {{- else }}
         command: ["/bin/sh"]
+        {{- end }}
         args:
-        - -c
-        - exec /usr/bin/{{ .Values.binaryName | default "polkadot" }}
+        {{- if .Values.customBinary  }}
+        {{- if .Values.customBinary.isShell }}
+        - -c exec
+        - {{ .Values.customBinary.binaryPath | default "/usr/bin/" }}{{ .Values.customBinary.binaryName | default "polkadot" }}
+          -d=/data
+        {{- else}}
+        - -d=/data
+        {{- end}}
+        {{- else }}
+        - -c exec
+        - /usr/bin/{{ .Values.binaryName | default "polkadot" }}
+          -d=/data
+        {{- end}}
           {{- $chainspec := include "polkadot-deployer.chainspecName" . -}}
           {{- if $chainspec }}
           --chain={{ $chainspec }}
           {{- end }}
-          -d=/data
           {{- if .Values.unsafeEndpointAccess }}
           --unsafe-rpc-external
           --unsafe-ws-external

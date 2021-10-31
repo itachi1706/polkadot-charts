@@ -90,6 +90,12 @@ serviceMonitorLabels:
 
 # inPeers: "100"
 
+customBinary:
+  command: "/zsh"
+  isShell: false
+  binaryPath: "/usr/local/"
+  binaryName: pokka
+
 # imagePullSecret:
 #   secretName: docker-registry-secret          #k8s secret name
 #   imageCredentials:
