@@ -1,0 +1,26 @@
+name: Package Helm Charts
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  package-polkadot-base-services:
+    runs-on: ubuntu-latest
+    name: Build and Package Polkadot Base Services
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          rm get_helm.sh
+      - name: Package Helm
+        working-directory: charts/polkadot-base-services
+        run: helm package .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: polkadot-base-services-tgz
+          path: charts/polkadot-base-services/*.tgz
