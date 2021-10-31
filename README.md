@@ -21,3 +21,9 @@ helm template -f values.yaml .
 # Go to chart directory
 helm package .
 ```
+
+
+## Substrate Alert Rules Setup
+```bash
+scripts/substrate-alertrules-charts/import.sh
+```
