@@ -71,8 +71,8 @@ jobs:
             chmod 700 get_helm.sh
             ./get_helm.sh
             rm get_helm.sh
-            brew install yq
             sudo apt-get install prometheus
+        - uses: chrisdickinson/setup-yq@latest
         - name: Generate Alertrules
           run: scripts/substrate-alertrules-charts/import.sh
         - name: Package Helm
