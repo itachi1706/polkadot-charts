@@ -15,6 +15,8 @@ validatorBootNodeP2PPort: 30101
 
 monitoring: false
 
+createLoadBalancer: true
+
 includeValidatorBootNode: false
 
 grafana:

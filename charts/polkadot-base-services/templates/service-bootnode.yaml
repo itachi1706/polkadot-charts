@@ -14,5 +14,9 @@ spec:
     name: p2p
   selector:
     node: polkadot-node-0
+{{- if .Values.createLoadBalancer }}
   type: LoadBalancer
+{{- else }}
+  type: NodePort
+{{- end }}
 {{ end }}
